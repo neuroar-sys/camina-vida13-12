@@ -9,7 +9,7 @@ const testimonials = [
 
 export default function SocialProof() {
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 text-center bg-white">
+    <section id="testimonios" className="py-16 px-4 sm:px-6 lg:px-8 text-center bg-white">
       <motion.h2
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}

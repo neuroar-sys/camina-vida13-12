@@ -41,7 +41,7 @@ const steps = [
 
 export default function MethodSection() {
   return (
-    <section className="py-16 px-4 bg-green-50">
+    <section id="metodo" className="py-16 px-4 bg-green-50">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: -30 }}
