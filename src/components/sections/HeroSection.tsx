@@ -63,8 +63,7 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
           <p className="text-lg mb-6 font-medium">
             <span className="bg-gradient-to-r from-gray-200 via-gray-100 to-white bg-clip-text text-transparent animate-gradient font-bold">
               Este 13 de diciembre te invitamos a participar de una experiencia diferente: 
-              una caminata terapéutica grupal en los Bosques de Palermo, guiada por profesionales 
-              en salud, acompañamiento y bienestar emocional.
+              una caminata saludable grupal en Palermo, y guiada por profesionales.
             </span>
           </p>
 
