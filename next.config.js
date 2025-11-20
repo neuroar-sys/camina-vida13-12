@@ -1,12 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactCompiler: true,
-  swcMinify: true,
+  swcMinify: true, // minificación moderna
+
   experimental: {
-    optimizePackageImports: ["react-icons"],
+    optimizePackageImports: ["react-icons"], // reduce bundle de iconos
   },
+
   images: {
-    formats: ["image/avif", "image/webp"],
+    formats: ["image/avif", "image/webp"], // formatos modernos
   },
 };
 
