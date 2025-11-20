@@ -75,7 +75,7 @@ async function enviarCorreo(data: Inscripto) {
   try {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
-      to: "organizador@caminatasterapeuticas.com",
+      to: "sendabuena@gmail.com",
       subject: "Nuevo inscripto - Caminatas Terapéuticas Palermo",
       html: `
         <h2>Nuevo inscripto</h2>

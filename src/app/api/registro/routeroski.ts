@@ -64,7 +64,7 @@ async function guardarEnSupabase(data: Inscripto) {
 async function enviarCorreo(data: Inscripto) {
   await transporter.sendMail({
     from: process.env.EMAIL_USER,
-    to: "organizador@caminatasterapeuticas.com", // cambia a tu correo real
+    to: "sendabuena@gmail.com", // cambia a tu correo real
     subject: "Nuevo inscripto - Caminatas Terapéuticas Palermo",
     html: `
       <h2>Nuevo inscripto</h2>
