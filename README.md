@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌱 Caminata Vida 13-12
 
-## Getting Started
+Landing page y dashboard interactivo para el evento **Caminatas Terapéuticas Palermo**, desarrollado con **Next.js**, **Supabase**, **Notion** y desplegado en **Vercel**.  
+El proyecto integra inscripción, coordinación y estadísticas en un flujo modular y reproducible.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 📐 Arquitectura del proyecto
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Frontend:**  
+  - Framework: [Next.js](https://nextjs.org/)  
+  - Diseño modular con componentes reutilizables (`HeroSection`, `BenefitsSection`, `EventDetails`, `DashboardResumen`, etc.)  
+  - Responsive design y accesibilidad optimizada.  
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Backend / API:**  
+  - Endpoints en `/api` para manejar inscripciones, envíos de correo y conexión con Telegram.  
+  - Validación híbrida: cupos, duplicados, circuitos sin coordinador, roles sin acceso.  
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Base de datos:**  
+  - [Supabase](https://supabase.com/) como backend-as-a-service.  
+  - Tablas principales:  
+    - `inscripciones`  
+    - `circuitos`  
+    - `coordinadores`  
+    - `roles`  
 
-## Learn More
+- **Integraciones:**  
+  - **Notion**: almacenamiento paralelo de inscripciones y coordinación.  
+  - **Telegram Bot**: dashboard interactivo con comandos (`/inscriptos`, `/stats`, `/circuitos`, `/roles`).  
+  - **Email (SMTP)**: confirmación automática de inscripción.  
 
-To learn more about Next.js, take a look at the following resources:
+- **Deploy:**  
+  - [Vercel](https://vercel.com/) con integración continua desde GitHub.  
+  - Cada `git push` a `main` dispara un redeploy automático.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## ⚙️ Instalación local
 
-## Deploy on Vercel
+1. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/neuroar-sys/camina-vida13-12.git
+   cd camina-vida13-12
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
