@@ -9,6 +9,7 @@ const nextConfig = {
 
   images: {
     formats: ["image/avif", "image/webp"], // formatos modernos
+    domains: ["i.ytimg.com"], // habilita imágenes desde YouTube CDN
   },
 };
 
