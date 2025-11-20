@@ -12,7 +12,7 @@ export default function CaminaVidaSocial() {
       </p>
       <div className="flex justify-center gap-8 text-green-800 text-4xl">
         <a
-          href="https://instagram.com/caminatasterapeuticas"
+          href="https://www.threads.com/@caminavidaagencia"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Instagram"
@@ -21,7 +21,7 @@ export default function CaminaVidaSocial() {
           <FaInstagram />
         </a>
         <a
-          href="https://facebook.com/caminatasterapeuticas"
+          href="https://www.facebook.com/share/17WeWALEJ9/"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Facebook"

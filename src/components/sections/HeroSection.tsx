@@ -1,7 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { FaWalking } from "react-icons/fa";
-import { FaArrowRight } from "react-icons/fa";
+import { FaWalking, FaArrowRight } from "react-icons/fa";
 
 interface HeroSectionProps {
   onOpenBooking: () => void;
@@ -9,20 +8,19 @@ interface HeroSectionProps {
 
 export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
   return (
-    <header className="relative h-[70vh] flex items-center justify-center text-white overflow-hidden">
+    <header className="relative min-h-screen md:h-[70vh] flex items-center justify-center text-white overflow-hidden">
       {/* Imagen de fondo difuminada */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: "url('/images/gentevienecaminando.png')", // coloca tu imagen en public/images
+          backgroundImage: "url('/images/gentevienecaminando.png')",
         }}
       >
-        {/* Overlay con oscurecimiento y blur */}
         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
       </div>
 
       {/* Contenido */}
-      <div className="relative z-10 max-w-4xl mx-auto text-center px-4">
+      <div className="relative z-10 max-w-4xl mx-auto text-center px-4 pb-12">
         {/* Ícono animado */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
