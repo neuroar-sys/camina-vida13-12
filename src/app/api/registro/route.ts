@@ -35,7 +35,7 @@ const transporter = nodemailer.createTransport({
 
 type Inscripto = {
   nombre: string;
-  edad: string;
+  edad: number;
   whatsapp: string;
   horario: "mañana" | "tarde";
 };
@@ -96,9 +96,7 @@ async function enviarANotion(data: Inscripto) {
 }
 
 
-
-
-async function enviarATelegram(data: { nombre: string; edad: number; whatsapp: number; horario: string }) {
+async function enviarATelegram(data: { nombre: string; edad: string | number; whatsapp: string; horario: string }) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) return;
