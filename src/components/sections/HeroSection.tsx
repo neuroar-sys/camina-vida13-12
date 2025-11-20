@@ -74,7 +74,7 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
                        font-bold py-3 px-8 rounded-full text-lg shadow-lg 
                        transition-transform transform hover:scale-105 inline-flex items-center gap-2"
           >
-            ¡Reservá tu lugar ahora! Cupos limitados.
+            ¡Reservá ahora!
             <FaArrowRight className="h-5 w-5 group-hover:translate-x-1 transition" />
           </button>
         </motion.div>
