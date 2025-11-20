@@ -44,12 +44,11 @@ function validar(data: any): Inscripto {
   const { nombre, edad, whatsapp, horario } = data || {};
   if (!nombre || typeof nombre !== "string") throw new Error("Nombre es requerido");
   if (!edad || isNaN(Number(edad))) throw new Error("Edad es requerida y debe ser número");
-  if (!whatsapp || isNaN(Number(whatsapp))) throw new Error("WhatsApp es requerido y debe ser número");
+  if (!whatsapp || typeof whatsapp !== "string") throw new Error("WhatsApp es requerido");
   if (!horario || !["mañana", "tarde"].includes(horario))
     throw new Error("Horario debe ser 'mañana' o 'tarde'");
-  return { nombre, edad: String(edad), whatsapp: String(whatsapp), horario };
+  return { nombre, edad: Number(edad), whatsapp: String(whatsapp), horario };
 }
-
 
 async function guardarEnSupabase(data: Inscripto) {
   const { error } = await supabase.from("inscripciones_13_12").insert([
@@ -86,8 +85,8 @@ async function enviarANotion(data: Inscripto) {
     properties: {
       ID: { title: [{ text: { content: data.nombre } }] },
       Nombre: { rich_text: [{ text: { content: data.nombre } }] },
-      Edad: { number: Number(data.edad) },
-      WhatsApp: { number: Number(data.whatsapp) },
+      Edad: { number: data.edad },
+      WhatsApp: { rich_text: [{ text: { content: data.whatsapp } }] },
       Horario: { select: { name: data.horario } },
       FechaInscripcion: { date: { start: new Date().toISOString() } },
       Estado: { rich_text: [{ text: { content: "Pendiente" } }] },
@@ -95,31 +94,29 @@ async function enviarANotion(data: Inscripto) {
   });
 }
 
-
-async function enviarATelegram(data: { nombre: string; edad: string | number; whatsapp: string; horario: string }) {
+async function enviarATelegram(data: Inscripto) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) return;
 
   const texto =
-  `📝 *Nuevo inscripto en Caminata 13-12*\n\n` +
-  `👤 *Nombre:* ${data.nombre}\n` +
-  `🎂 *Edad:* ${data.edad}\n` +
-  `📱 *WhatsApp:* ${data.whatsapp}\n` +
-  `⏰ *Horario:* ${data.horario}\n` +
-  `📅 *Fecha:* ${new Date().toLocaleString("es-AR")}\n\n` +
-  `✅ Registro guardado en Supabase y Notion`;
-
+    `📝 *Nuevo inscripto en Caminata 13-12*\n\n` +
+    `👤 *Nombre:* ${data.nombre}\n` +
+    `🎂 *Edad:* ${data.edad}\n` +
+    `📱 *WhatsApp:* ${data.whatsapp}\n` +
+    `⏰ *Horario:* ${data.horario}\n` +
+    `📅 *Fecha:* ${new Date().toLocaleString("es-AR")}\n\n` +
+    `✅ Registro guardado en Supabase y Notion`;
 
   await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    chat_id: chatId,
-    text: texto,
-    parse_mode: "Markdown" // 👈 habilita formato en negrita
-  }),
-});
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: chatId,
+      text: texto,
+      parse_mode: "Markdown",
+    }),
+  });
 }
 
 export async function POST(req: Request) {
