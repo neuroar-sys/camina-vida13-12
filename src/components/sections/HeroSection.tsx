@@ -13,7 +13,7 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: "url('/images/gentevienecaminando.png')",
+          backgroundImage: "url('/images/gentevienecaminando.webp')",
         }}
       >
         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
