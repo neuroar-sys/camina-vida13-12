@@ -9,6 +9,7 @@ import VideoEventFlex from "@/components/sections/VideoEventFlex";
 import CountdownTimer from "@/components/conversion/CountdownTimer";
 import TrustBadges from "@/components/conversion/TrustBadges";
 import SocialProof from "@/components/sections/SocialProof";
+import CaminaVidaSocial from "@/components/CaminaVidaSocial";
 import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
 
 export default function HomePage() {
@@ -88,6 +89,8 @@ export default function HomePage() {
 
       {/* Testimonios */}
       <SocialProof />
+
+      <CaminaVidaSocial />
 
       {/* CTA Final */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 text-center">
