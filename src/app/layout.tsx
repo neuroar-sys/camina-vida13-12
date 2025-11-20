@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     images: ["/og.webp"],
   },
   icons: {
-    icon: "/favicon.ico", // ⚠️ asegurate que exista en /public
+    icon: "/favicon1.ico", // ⚠️ asegurate que exista en /public
   },
 };
 
