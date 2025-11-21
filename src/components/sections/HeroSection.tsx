@@ -2,11 +2,11 @@
 import { motion } from "framer-motion";
 import { FaWalking, FaArrowRight } from "react-icons/fa";
 
-interface HeroSectionProps {
-  onOpenBooking: () => void;
-}
+export default function HeroSection() {
+  const handleBooking = () => {
+    document.querySelector("#reserva")?.scrollIntoView({ behavior: "smooth" });
+  };
 
-export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
   return (
     <header className="relative min-h-screen md:h-[70vh] flex items-center justify-center text-white overflow-hidden">
       {/* Imagen de fondo difuminada */}
@@ -71,7 +71,7 @@ export default function HeroSection({ onOpenBooking }: HeroSectionProps) {
           </p>
 
           <button
-            onClick={onOpenBooking}
+            onClick={handleBooking}
             className="group bg-white text-emerald-700 hover:bg-emerald-50 
                        font-bold py-3 px-8 rounded-full text-lg shadow-lg 
                        transition-transform transform hover:scale-105 inline-flex items-center gap-2"

@@ -1,4 +1,6 @@
-import { FaArrowRight } from "react-icons/fa"; // 👈 IMPORTAR AQUÍ
+"use client";
+
+import { FaArrowRight } from "react-icons/fa";
 import HeroSection from "@/components/sections/HeroSection";
 import BenefitsSection from "@/components/sections/BenefitsSection";
 import MethodSection from "@/components/sections/MethodSection";
@@ -8,23 +10,34 @@ import TrustBadges from "@/components/conversion/TrustBadges";
 import SocialProof from "@/components/sections/SocialProof";
 import CaminaVidaSocial from "@/components/CaminaVidaSocial";
 import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
-import InscripcionForm from "@/components/forms/InscripcionForm"; // 👈 nuevo
+import InscripcionForm from "@/components/forms/InscripcionForm";
 
 export default function HomePage() {
   const EVENT_DATE = "2025-12-13T09:00:00-03:00";
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-emerald-50 to-cyan-50">
-      <HeroSection onOpenBooking={() => {
-        document.querySelector("#reserva")?.scrollIntoView({ behavior: "smooth" });
-      }} />
+      {/* Hero principal */}
+      <HeroSection /> {/* 👈 ya no recibe props */}
 
+      {/* Beneficios terapéuticos */}
       <BenefitsSection />
+
+      {/* Métodos */}
       <MethodSection />
+
+      {/* Video + Detalles */}
       <VideoEventFlex />
+
+      {/* Cuenta regresiva */}
       <CountdownTimer targetDate={EVENT_DATE} />
+
+      {/* Trust Badges */}
       <TrustBadges />
+
+      {/* Testimonios */}
       <SocialProof />
+
       <CaminaVidaSocial />
 
       {/* CTA Final */}
