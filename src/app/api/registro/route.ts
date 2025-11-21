@@ -1,7 +1,3 @@
-// app/api/registro/route.ts
-// ⚠️ Solo para desarrollo: desactiva verificación de certificados (NO usar en producción)
-// process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { Client as NotionClient } from "@notionhq/client";
@@ -14,8 +10,8 @@ import { createClient } from "@supabase/supabase-js";
 // EMAIL_PASS
 // NOTION_TOKEN
 // NOTION_DB_ID
-// TELEGRAM_BOT_TOKEN (opcional)
-// TELEGRAM_CHAT_ID (opcional)
+// TELEGRAM_BOT_TOKEN
+// TELEGRAM_AUTHORIZED_USERS (coma separada)
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -39,8 +35,8 @@ type Inscripto = {
   horario: "mañana" | "tarde";
 };
 
+// ✅ Validación robusta
 function validar(data: any): Inscripto {
-  console.log("📥 Validando datos recibidos:", data);
   const { nombre, edad, whatsapp, horario } = data || {};
   if (!nombre || typeof nombre !== "string") throw new Error("Nombre es requerido");
   if (!edad || isNaN(Number(edad)) || Number(edad) <= 0)
@@ -52,115 +48,78 @@ function validar(data: any): Inscripto {
   return { nombre, edad: Number(edad), whatsapp: String(whatsapp), horario };
 }
 
+// ✅ Guardar en Supabase
 async function guardarEnSupabase(data: Inscripto) {
-  console.log("💾 Guardando en Supabase:", data);
   const { error } = await supabase.from("inscripciones_13_12").insert([
     {
-      nombre: data.nombre,
-      edad: data.edad,
-      whatsapp: data.whatsapp,
-      horario: data.horario,
+      ...data,
       created_at: new Date().toISOString(),
     },
   ]);
-  if (error) {
-    console.error("❌ Error Supabase:", error.message);
-    throw new Error(`Supabase: ${error.message}`);
-  }
-  console.log("✅ Supabase OK");
+  if (error) throw new Error(`Supabase: ${error.message}`);
 }
 
+// ✅ Enviar correo
 async function enviarCorreo(data: Inscripto) {
-  console.log("📧 Enviando correo:", data);
-  try {
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: "sendabuena@gmail.com",
-      subject: "Nuevo inscripto - Caminatas Terapéuticas Palermo",
-      html: `
-        <h2>Nuevo inscripto</h2>
-        <p><strong>Nombre:</strong> ${data.nombre}</p>
-        <p><strong>Edad:</strong> ${data.edad}</p>
-        <p><strong>WhatsApp:</strong> ${data.whatsapp}</p>
-        <p><strong>Horario:</strong> ${data.horario}</p>
-      `,
-    });
-    console.log("✅ Correo enviado");
-  } catch (err: any) {
-    console.error("❌ Error correo:", err.message);
-    throw err;
-  }
+  await transporter.sendMail({
+    from: process.env.EMAIL_USER,
+    to: "sendabuena@gmail.com",
+    subject: "Nuevo inscripto - Caminatas Terapéuticas Palermo",
+    html: `
+      <h2>Nuevo inscripto</h2>
+      <p><strong>Nombre:</strong> ${data.nombre}</p>
+      <p><strong>Edad:</strong> ${data.edad}</p>
+      <p><strong>WhatsApp:</strong> ${data.whatsapp}</p>
+      <p><strong>Horario:</strong> ${data.horario}</p>
+    `,
+  });
 }
 
+// ✅ Enviar a Notion
 async function enviarANotion(data: Inscripto) {
-  if (!process.env.NOTION_TOKEN || !process.env.NOTION_DB_ID) {
-    console.log("⚠️ Notion no configurado, se omite");
-    return;
-  }
-  console.log("📝 Enviando a Notion:", data);
-  try {
-    await notion.pages.create({
-      parent: { database_id: process.env.NOTION_DB_ID! },
-      properties: {
-        ID: { title: [{ text: { content: data.nombre } }] },
-        Nombre: { rich_text: [{ text: { content: data.nombre } }] },
-        Edad: { number: data.edad },
-        WhatsApp: { rich_text: [{ text: { content: data.whatsapp } }] },
-        Horario: { select: { name: data.horario } },
-        FechaInscripcion: { date: { start: new Date().toISOString() } },
-        Estado: { rich_text: [{ text: { content: "Pendiente" } }] },
-      },
-    });
-    console.log("✅ Notion OK");
-  } catch (err: any) {
-    console.error("❌ Error Notion:", err.message);
-    throw err;
-  }
+  if (!process.env.NOTION_TOKEN || !process.env.NOTION_DB_ID) return;
+  await notion.pages.create({
+    parent: { database_id: process.env.NOTION_DB_ID! },
+    properties: {
+      ID: { title: [{ text: { content: data.nombre } }] },
+      Nombre: { rich_text: [{ text: { content: data.nombre } }] },
+      Edad: { number: data.edad },
+      WhatsApp: { rich_text: [{ text: { content: data.whatsapp } }] },
+      Horario: { select: { name: data.horario } },
+      FechaInscripcion: { date: { start: new Date().toISOString() } },
+      Estado: { rich_text: [{ text: { content: "Pendiente" } }] },
+    },
+  });
 }
 
-async function enviarATelegram(data: { nombre: string; edad: string | number; whatsapp: string; horario: string }) {
+// ✅ Enviar a Telegram
+async function enviarATelegram(data: Inscripto) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
-  if (!token || !chatId) {
-    console.log("⚠️ Telegram no configurado, se omite");
-    return;
-  }
-
-  const edadNum = typeof data.edad === "string" ? Number(data.edad) : data.edad;
+  const authorizedUsers = process.env.TELEGRAM_AUTHORIZED_USERS?.split(",") || [];
+  if (!token || authorizedUsers.length === 0) return;
 
   const texto =
     `📝 *Nuevo inscripto en Caminata 13-12*\n\n` +
     `👤 *Nombre:* ${data.nombre}\n` +
-    `🎂 *Edad:* ${edadNum}\n` +
+    `🎂 *Edad:* ${data.edad}\n` +
     `📱 *WhatsApp:* ${data.whatsapp}\n` +
     `⏰ *Horario:* ${data.horario}\n` +
     `📅 *Fecha:* ${new Date().toLocaleString("es-AR")}\n\n` +
     `✅ Registro guardado en Supabase y Notion`;
 
-  console.log("📲 Enviando a Telegram:", texto);
-
-  try {
+  for (const chatId of authorizedUsers) {
     await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: texto,
-        parse_mode: "Markdown",
-      }),
+      body: JSON.stringify({ chat_id: chatId, text: texto, parse_mode: "Markdown" }),
     });
-    console.log("✅ Telegram OK");
-  } catch (err: any) {
-    console.error("❌ Error Telegram:", err.message);
-    throw err;
   }
 }
 
+// ✅ Endpoint principal
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    console.log("📥 Body recibido:", body);
-
     const data = validar(body);
 
     await guardarEnSupabase(data);
@@ -170,10 +129,8 @@ export async function POST(req: Request) {
       enviarATelegram(data),
     ]);
 
-    console.log("🎉 Registro completo OK");
     return NextResponse.json({ ok: true });
   } catch (err: any) {
-    console.error("❌ Error general en registro:", err);
     return NextResponse.json({ ok: false, error: err.message ?? "Error" }, { status: 400 });
   }
 }
