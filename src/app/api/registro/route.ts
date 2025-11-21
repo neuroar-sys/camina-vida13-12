@@ -93,10 +93,19 @@ async function enviarANotion(data: Inscripto) {
 }
 
 // ✅ Enviar a Telegram
-async function enviarATelegram(data: Inscripto) {
+async function enviarATelegram(data: {
+  nombre: string;
+  edad: number;
+  whatsapp: string;
+  horario: string;
+}) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const authorizedUsers = process.env.TELEGRAM_AUTHORIZED_USERS?.split(",") || [];
-  if (!token || authorizedUsers.length === 0) return;
+
+  if (!token || authorizedUsers.length === 0) {
+    console.log("⚠️ Telegram no configurado, se omite");
+    return;
+  }
 
   const texto =
     `📝 *Nuevo inscripto en Caminata 13-12*\n\n` +
@@ -108,13 +117,20 @@ async function enviarATelegram(data: Inscripto) {
     `✅ Registro guardado en Supabase y Notion`;
 
   for (const chatId of authorizedUsers) {
-    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ chat_id: chatId, text: texto, parse_mode: "Markdown" }),
-    });
+    try {
+      const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ chat_id: chatId, text: texto, parse_mode: "Markdown" }),
+      });
+      const json = await res.json();
+      console.log("📲 Telegram respuesta:", json);
+    } catch (err: any) {
+      console.error("❌ Error Telegram:", err.message);
+    }
   }
 }
+
 
 // ✅ Endpoint principal
 export async function POST(req: Request) {
