@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
+import Header from "@/components/layout/Header"; // 👈 importa tu Header
+import Footer from "@/components/layout/Footer"; // opcional si querés globalizar el footer
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +21,7 @@ export const metadata: Metadata = {
     siteName: "Camina Vida",
     images: [
       {
-        url: "/og.webp", // ⚠️ asegurate que exista en /public
+        url: "/og.webp",
         width: 1200,
         height: 630,
         alt: "Caminata Terapéutica Palermo 13/12",
@@ -35,7 +37,7 @@ export const metadata: Metadata = {
     images: ["/og.webp"],
   },
   icons: {
-    icon: "/favicon1.ico", // ⚠️ asegurate que exista en /public
+    icon: "/favicon1.ico",
   },
 };
 
@@ -47,8 +49,17 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={inter.className}>
-        {children}
+        {/* Header global */}
+        <Header />
+
+        {/* Contenido de cada página */}
+        <main className="pt-16">{children}</main>
+
+        {/* Footer global opcional */}
+        <Footer />
+
         <Analytics />
+        <Footer /> {/* 👈 ahora el footer es global */}
       </body>
     </html>
   );
