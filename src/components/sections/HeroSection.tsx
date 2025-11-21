@@ -19,10 +19,6 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
       </div>
 
-      {/* Cuadrado de campaña que baja desde el header */}
-      <div className="absolute top-0 left-4 w-24 h-32 bg-green-600 text-white flex items-center justify-center font-bold shadow-lg z-20">
-        Campaña
-      </div>
 
       {/* Contenido */}
       <div className="relative z-10 max-w-4xl mx-auto text-center px-4 pb-12 mt-32">
