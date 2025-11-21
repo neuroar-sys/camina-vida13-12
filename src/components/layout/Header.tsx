@@ -22,7 +22,7 @@ export default function Header() {
         {/* Cuadrado de campaña */}
         {showSquare && (
           <div className="absolute left-4 top-0 w-24 h-32 bg-green-600/80 text-white flex items-center justify-center font-bold shadow-lg transition-opacity duration-300">
-            Campaña
+            Caminata 13-12
           </div>
         )}
 
