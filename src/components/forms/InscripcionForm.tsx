@@ -21,7 +21,7 @@ export default function InscripcionForm({ onSuccess }: { onSuccess?: () => void 
     setLoading(true);
 
     try {
-      const res = await fetch("/api/inscripcion", {
+      const res = await fetch("/api/registro", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
