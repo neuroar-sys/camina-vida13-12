@@ -32,7 +32,7 @@ export default function HomePage() {
       {/* Cuenta regresiva */}
       <CountdownTimer targetDate={EVENT_DATE} />
 
-      {/* Trust Badges */}
+      {/* Trusted Badges */}
       <TrustBadges />
 
       {/* Testimonios */}
