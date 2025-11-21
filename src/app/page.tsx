@@ -1,3 +1,4 @@
+import { FaArrowRight } from "react-icons/fa"; // 👈 IMPORTAR AQUÍ
 import HeroSection from "@/components/sections/HeroSection";
 import BenefitsSection from "@/components/sections/BenefitsSection";
 import MethodSection from "@/components/sections/MethodSection";
