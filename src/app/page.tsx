@@ -8,7 +8,7 @@ import VideoEventFlex from "@/components/sections/VideoEventFlex";
 import CountdownTimer from "@/components/conversion/CountdownTimer";
 import TrustBadges from "@/components/conversion/TrustBadges";
 import SocialProof from "@/components/sections/SocialProof";
-import CaminaVidaSocial from "@/components/CaminaVidaSocial";
+import CaminaVidaSocial from "@/components/sections/CaminaVidaSocial";
 import FloatingWhatsApp from "@/components/ui/FloatingWhatsApp";
 import InscripcionForm from "@/components/forms/InscripcionForm";
 
