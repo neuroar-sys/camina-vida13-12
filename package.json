@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@notionhq/client": "^5.4.0",
+    "@radix-ui/react-dialog": "^1.1.15",
     "@supabase/supabase-js": "^2.84.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@vercel/analytics": "^1.0.0",

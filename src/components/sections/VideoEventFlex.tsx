@@ -28,12 +28,14 @@ export default function VideoEventFlexBig() {
                   aria-label="Reproducir video"
                 >
                   <Image
-                    src="https://i.ytimg.com/vi/HrtM--OrGFY/hqdefault.jpg"
-                    alt="Vista previa del video"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
+  src="https://i.ytimg.com/vi/HrtM--OrGFY/hqdefault.jpg"
+  alt="Vista previa del video"
+  fill
+  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 65vw, 50vw"
+  className="object-cover"
+  priority
+/>
+
                   <span className="bg-red-600 px-4 py-2 rounded-full z-10">
                     ▶ Reproducir
                   </span>
