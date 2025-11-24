@@ -55,9 +55,7 @@ export default function RootLayout({
         {/* Contenido de cada página */}
         <main className="pt-16">{children}</main>
 
-        {/* Footer global opcional */}
-        <Footer />
-
+    
         <Analytics />
         <Footer /> {/* 👈 ahora el footer es global */}
       </body>

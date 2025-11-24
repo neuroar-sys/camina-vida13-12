@@ -19,12 +19,17 @@ export default function Header() {
     <header className="sticky top-0 left-0 w-full bg-white/90 backdrop-blur-sm shadow-md z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20 relative">
         
-        {/* Cuadrado de campaña */}
         {showSquare && (
-          <div className="absolute left-4 top-0 w-24 h-32 bg-green-600/80 text-white flex items-center justify-center font-bold shadow-lg transition-opacity duration-300">
-            Caminata 13-12
-          </div>
-        )}
+  <div className="absolute left-4 top-0 w-24 h-32 hidden md:flex items-center justify-center transition-opacity duration-300">
+  <img
+    src="/logo-caminata.webp"
+    alt="Logo Caminata 13-12"
+    className="w-full h-full object-contain"
+  />
+</div>
+
+)}
+
 
         {/* Menú desktop */}
         <nav className="hidden md:flex space-x-8 ml-32">

@@ -59,12 +59,14 @@ export default function HeroSection() {
           transition={{ delay: 0.8, duration: 1 }}
           className="bg-white/10 backdrop-blur-sm rounded-xl p-6 max-w-2xl mx-auto"
         >
-          <p className="text-lg mb-6 font-medium">
-            <span className="bg-gradient-to-r from-gray-200 via-gray-100 to-white bg-clip-text text-transparent animate-gradient font-bold">
-              Este 13 de diciembre te invitamos a participar de una experiencia diferente: 
-              una caminata saludable grupal en Palermo, y guiada por profesionales.
-            </span>
-          </p>
+          <p className="text-lg text-white">
+  Este{" "}
+  <span className="relative font-bold text-green-400 underline decoration-wavy animate-pulse drop-shadow-[0_0_6px_#22c55e]">
+    13 de diciembre
+  </span>{" "}
+  te invitamos a participar de una experiencia diferente: una caminata saludable grupal en Palermo, y guiada por profesionales.
+</p>
+
 
           <button
             onClick={handleBooking}
